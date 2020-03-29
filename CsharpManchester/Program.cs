@@ -10,8 +10,7 @@ namespace CsharpManchester
         static void Main(string[] args)
         {
             string results = "Manchester United 1 Chelsea 0,Arsenal 1 Manchester United 1,Manchester United 3 Fulham 1,Liverpool 2 Manchester United 1,Swansea 2 Manchester United 4";
-            var matches = results.Split(",");
-            var calculateMatch = new CalculateMatch(results);
+            var calculateMatch = new CalculateMatches(results);
             Team selectedTeam = calculateMatch.GetResults("Manchester United");
             Console.WriteLine(selectedTeam);
         }
