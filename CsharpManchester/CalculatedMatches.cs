@@ -37,7 +37,7 @@ namespace CsharpManchester
                         if (nameIndex > 0)
                         {
                             awayTeam = _teams[j];
-                            bool Team1HasScore = int.TryParse(_matches[i].TrimStart().Substring(scoreIndex), out score)
+                            bool team1HasScore = int.TryParse(_matches[i].TrimStart().Substring(scoreIndex), out score)
                                                 ? true : throw new ArgumentException("A team's score cannot be null.");
 
                             awayScore = score;
@@ -46,7 +46,7 @@ namespace CsharpManchester
                         {
                             homeTeam = _teams[j];
                             String partString = _matches[i].TrimStart().Substring(scoreIndex).Trim();
-                            bool Team2Hasscore = int.TryParse(partString.Substring(0, partString.IndexOf(' ',StringComparison.InvariantCulture)), out score) 
+                            bool team2Hasscore = int.TryParse(partString.Substring(0, partString.IndexOf(' ',StringComparison.InvariantCulture)), out score) 
                                                 ? true : throw new ArgumentException("A team's score cannot be null.");
                             homeScore = score;
                         }
