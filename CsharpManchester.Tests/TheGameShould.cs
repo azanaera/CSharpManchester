@@ -14,5 +14,11 @@ namespace CsharpManchester.Tests
             var calculateMatches = new CalculatedMatches(results);
             Assert.True(calculateMatches.HasTeamsRegistered());
         }
+        [Fact]
+        public void NotHaveTheTeamsRegistered()
+        {
+            var calculateMatches = new CalculatedMatches(results);
+            Assert.False(calculateMatches.HasTeamsRegistered());
+        }
     }
 }
