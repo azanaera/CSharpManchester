@@ -28,24 +28,26 @@ namespace CsharpManchester
 
                 for (int j = 0; j < _teams.Count; j++)
                 {
-                    if (_matches[i].Contains(_teams[j].Name,StringComparison.InvariantCulture))
+                    if (_matches[i].TrimStart().Contains(_teams[j].Name,StringComparison.InvariantCulture))
                     {
-                        int nameIndex = _matches[i].IndexOf(_teams[j].Name,StringComparison.InvariantCulture);
+                        int nameIndex = _matches[i].TrimStart().IndexOf(_teams[j].Name,StringComparison.InvariantCulture);
                         int scoreIndex = nameIndex + _teams[j].Name.Length;
                         int score = 0;
 
                         if (nameIndex > 0)
                         {
                             awayTeam = _teams[j];
-                            bool IsTeam1score = int.TryParse(_matches[i].Substring(scoreIndex), out score);
+                            bool Team1HasScore = int.TryParse(_matches[i].TrimStart().Substring(scoreIndex), out score)
+                                                ? true : throw new ArgumentException("A team's score cannot be null.");
 
                             awayScore = score;
                         }
                         else
                         {
                             homeTeam = _teams[j];
-                            String partString = _matches[i].Substring(scoreIndex).Trim();
-                            bool isTeam2score = int.TryParse(partString.Substring(0, partString.IndexOf(' ',StringComparison.InvariantCulture)), out score);
+                            String partString = _matches[i].TrimStart().Substring(scoreIndex).Trim();
+                            bool Team2Hasscore = int.TryParse(partString.Substring(0, partString.IndexOf(' ',StringComparison.InvariantCulture)), out score) 
+                                                ? true : throw new ArgumentException("A team's score cannot be null.");
                             homeScore = score;
                         }
                     }
