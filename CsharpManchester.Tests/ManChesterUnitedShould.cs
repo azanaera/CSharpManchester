@@ -10,9 +10,9 @@ namespace CsharpManchester.Tests
     public class ManChesterUnitedShould
     {
         const string results = "Manchester United 1 Chelsea 0,Arsenal 1 Manchester United 1,Manchester United 3 Fulham 1,Liverpool 2 Manchester United 1,Swansea 2 Manchester United 4";
-        private CalculateMatches CreateDefaultCalculateMatches(string results)
+        private CalculatedMatches CreateDefaultCalculateMatches(string results)
         {
-            return new CalculateMatches(results);
+            return new CalculatedMatches(results);
         }
 
         [Theory]

@@ -5,13 +5,13 @@ using System.Text;
 
 namespace CsharpManchester
 {
-    public class CalculateMatches
+    public class CalculatedMatches
     {
         private readonly string[] _matches;
         private readonly List<Team> _teams = new List<Team>();
         private readonly string _results;
 
-        public CalculateMatches(string results)
+        public CalculatedMatches(string results)
         {
             _results = results ?? throw new ArgumentNullException(results);
             _matches = results.Split(",");

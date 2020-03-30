@@ -11,7 +11,7 @@ namespace CsharpManchester.Tests
         [Fact]
         public void HaveTheTeamsRegistered()
         {
-            var calculateMatches = new CalculateMatches(results);
+            var calculateMatches = new CalculatedMatches(results);
             Assert.True(calculateMatches.HasTeamsRegistered());
         }
     }
