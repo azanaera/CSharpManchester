@@ -9,20 +9,68 @@ namespace CsharpManchester.Tests
 {
     public class ManChesterUnitedShould
     {
-        [Fact]
-        public void HaveCorrectPoints()
+        const string Season1Results = "Manchester United 1 Chelsea 0,Arsenal 1 Manchester United 1,Manchester United 3 Fulham 1,Liverpool 2 Manchester United 1,Swansea 2 Manchester United 4";
+        const string Season2Results = "Manchester United 2 Chelsea 5, Arsenal 2 Manchester United 2,Manchester United 2 Fulham 4,Liverpool 2 Manchester United 3,Swansea 4 Manchester United 3";
+        const string Season3Results = "Manchester United 4 Chelsea 2, Arsenal 3 Manchester United 5,Manchester United 2 Fulham 1,Liverpool 4 Manchester United 2,Swansea 3 Manchester United 5";
+        private CalculatedMatches CreateDefaultCalculateMatches(string results)
         {
-            string results = "Manchester United 1 Chelsea 0,Arsenal 1 Manchester United 1,Manchester United 3 Fulham 1,Liverpool 2 Manchester United 1,Swansea 2 Manchester United 4";
-            // Act
-            var calculateMatch = new CalculateMatch(results);
-            Team selectedTeam = calculateMatch.GetResults("Manchester United");
-            // Assert
-            Assert.Equal(3, selectedTeam.Wins); // win 
-            Assert.Equal(1, selectedTeam.Draws); // draw
-            Assert.Equal(1, selectedTeam.Losses); // defeat
-            Assert.Equal(10, selectedTeam.GoalsScored); // goal scored
-            Assert.Equal(6, selectedTeam.GoalsConceded); // concede
-            Assert.Equal(19, selectedTeam.GetPoints()); // points
+            return new CalculatedMatches(results);
+        }
+
+        [Theory]
+        [InlineData(Season1Results,3)]
+        [InlineData(Season2Results,1)]
+        [InlineData(Season3Results,4)]
+        public void HaveTheSameWinResult(string results,int expected)
+        {
+            var calculateMatches = CreateDefaultCalculateMatches(results);
+            Team selectedTeam = calculateMatches.GetResults("Manchester United");
+            Assert.Equal(expected, selectedTeam.Wins);
+        }
+
+        [Theory]
+        [InlineData(Season1Results, 1)]
+        public void HaveTheSameDrawResult(string results,int expected)
+        {
+            var calculateMatches = CreateDefaultCalculateMatches(results);
+            Team selectedTeam = calculateMatches.GetResults("Manchester United");
+            Assert.Equal(expected, selectedTeam.Draws);
+        }
+
+        [Theory]
+        [InlineData(Season1Results, 1)]
+        public void HaveTheSameLossesResult(string results,int expected)
+        {
+            var calculateMatches = CreateDefaultCalculateMatches(results);
+            Team selectedTeam = calculateMatches.GetResults("Manchester United");
+            Assert.Equal(expected, selectedTeam.Losses);
+        }
+
+        [Theory]
+        [InlineData(Season1Results, 10)]
+        public void HaveTheSameGoalsScoredResult(string results,int expected)
+        {
+            var calculateMatches = CreateDefaultCalculateMatches(results);
+            Team selectedTeam = calculateMatches.GetResults("Manchester United");
+            Assert.Equal(expected, selectedTeam.GoalsScored);
+        }
+
+        [Theory]
+        [InlineData(Season1Results, 6)]
+        public void HaveTheSameGoalsConcededResult(string results,int expected)
+        {
+            var calculateMatches = CreateDefaultCalculateMatches(results);
+            Team selectedTeam = calculateMatches.GetResults("Manchester United");
+            Assert.Equal(expected, selectedTeam.GoalsConceded);
+        }
+
+        [Theory]
+        [InlineData(Season1Results, 10)]
+        public void HaveTheSameTotalPointsResult(string results,int expected)
+        {
+            var calculateMatches = CreateDefaultCalculateMatches(results);
+            Team selectedTeam = calculateMatches.GetResults("Manchester United");
+            Assert.Equal(expected, selectedTeam.GetPoints());
         }
     }
 }
