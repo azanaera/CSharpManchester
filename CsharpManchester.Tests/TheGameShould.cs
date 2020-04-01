@@ -9,8 +9,7 @@ namespace CsharpManchester.Tests
 {
     public class TheGameShould
     {
-        string results = "Manchester United 1 Chelsea 0,Arsenal 1 Manchester United 1,Manchester United 3 Fulham 1,Liverpool 2 Manchester United 1,Swansea 2 Manchester United 4";
-        const string path = @"..\..\..\TestData.txt";
+        const string results = "Manchester United 1 Chelsea 0,Arsenal 1 Manchester United 1,Manchester United 3 Fulham 1,Liverpool 2 Manchester United 1,Swansea 2 Manchester United 4";
 
         [Fact]
         public void HaveTheTeamsRegistered()
@@ -26,15 +25,15 @@ namespace CsharpManchester.Tests
         }
 
         [Theory]
-        [InlineData(path, 3)]
-        public void MockHaveTheSameWinResult(string path, int expected)
+        [InlineData(results, 3)]
+        public void MockHaveTheSameWinResult(string result, int expected)
         {
             
             var mockLoadData = new Mock<ILoadData>();
             mockLoadData.Setup(x => x.FromTextFile(It.IsAny<string>()))
-                .Returns(File.ReadAllText(path));
+                .Returns(results);
 
-            var calculatedMatches = new CalculatedMatches(mockLoadData.Object,path);
+            var calculatedMatches = new CalculatedMatches(mockLoadData.Object,results);
             Team selectedTeam = calculatedMatches.GetResults("Manchester United");
             Assert.Equal(expected, selectedTeam.Wins);
         }
