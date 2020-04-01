@@ -20,8 +20,8 @@ namespace CsharpManchester
 
         static string GetStringResultFromFile(string path)
         {
-            if (path == null) throw new ArgumentNullException(path);
-            return File.ReadAllText(path) ?? throw new FileNotFoundException(path);
+            if (path == null) throw new ArgumentNullException("The file directory cannot be empty.",path);
+            return File.Exists(path) ? File.ReadAllText(path) : throw new FileNotFoundException("The file doesnt exist.",path);
         }
     }
 }
