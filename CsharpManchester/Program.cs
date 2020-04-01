@@ -11,14 +11,17 @@ namespace CsharpManchester
     {
         static void Main(string[] args)
         {
-            string results = "Manchester United 1 Chelsea 0,Arsenal 1 Manchester United 1,Manchester United 3 Fulham 1,Liverpool 2 Manchester United 1,Swansea 2 Manchester United 4";
-
-
-            var path = File.ReadAllText(args[0]);
+            var path = GetStringResultFromFile(args[1]);
 
             var calculateMatch = new CalculatedMatches(path);
-            Team selectedTeam = calculateMatch.GetResults("Manchester United");
+            Team selectedTeam = calculateMatch.GetResults("Arsenal");
             Console.WriteLine(selectedTeam);
+        }
+
+        static string GetStringResultFromFile(string path)
+        {
+            if (path == null) throw new ArgumentNullException(path);
+            return File.ReadAllText(path) ?? throw new FileNotFoundException(path);
         }
     }
 }
