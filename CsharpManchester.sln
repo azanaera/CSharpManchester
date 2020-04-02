@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsharpManchester", "CsharpM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsharpManchester.Tests", "CsharpManchester.Tests\CsharpManchester.Tests.csproj", "{65BC7517-83AF-48F1-85A6-406CEB716749}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootBallGame", "FootBallGame\FootBallGame.csproj", "{20EF8B3A-9E25-4CC5-8CB4-88518368435F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FootBallGame", "FootBallGame\FootBallGame.csproj", "{20EF8B3A-9E25-4CC5-8CB4-88518368435F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

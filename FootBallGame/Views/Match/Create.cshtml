@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "Match Create";
+    string result = "";
+}
+
+<h1>Create</h1>
+
+
+
+<form method="post" asp-action="Create">
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Example textarea</label>
+                    <textarea asp-for="@result" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Calculate</button>
+            </div>
+        </div>
+    </div>
+</form>

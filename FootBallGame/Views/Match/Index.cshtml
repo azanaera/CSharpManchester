@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewData["Title"] = "Match Index";
+    var team = ViewBag.Team as Team;
+}
+
+
+@if (team != null)
+{
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">@team.Name</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+
+            <label for="exampleDropdownFormEmail1">Email address</label>
+            Cras justo odio
+        </li>
+        <li class="list-group-item">Dapibus ac facilisis in</li>
+        <li class="list-group-item">Vestibulum at eros</li>
+    </ul>
+    <div class="card-body">
+        <a href="#" class="card-link">Card link</a>
+        <a href="#" class="card-link">Another link</a>
+    </div>
+</div>
+}
+else
+{
+    <p>Team is Empty. Plase try again.</p>
+}
+<a asp-action="Create" type="button" class="btn btn-primary btn-lg">Large button</a>
