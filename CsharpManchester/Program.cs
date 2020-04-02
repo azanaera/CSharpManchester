@@ -3,16 +3,25 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.IO;
+
 namespace CsharpManchester
 {
     public class Program
     {
         static void Main(string[] args)
         {
-            string results = "Manchester United 1 Chelsea 0,Arsenal 1 Manchester United 1,Manchester United 3 Fulham 1,Liverpool 2 Manchester United 1,Swansea 2 Manchester United 4";
-            var calculateMatch = new CalculatedMatches(results);
-            Team selectedTeam = calculateMatch.GetResults("Manchester United");
+            var path = GetStringResultFromFile(args[1]);
+
+            var calculateMatch = new CalculatedMatches(path);
+            Team selectedTeam = calculateMatch.GetResults("Arsenal");
             Console.WriteLine(selectedTeam);
+        }
+
+        static string GetStringResultFromFile(string path)
+        {
+            if (path == null) throw new ArgumentNullException("The file directory cannot be empty.",path);
+            return File.Exists(path) ? File.ReadAllText(path) : throw new FileNotFoundException("The file doesnt exist.",path);
         }
     }
 }

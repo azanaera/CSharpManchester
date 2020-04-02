@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -10,11 +11,21 @@ namespace CsharpManchester
         private readonly string[] _matches;
         private readonly List<Team> _teams = new List<Team>();
         private readonly string _results;
+        private ILoadData _data;
 
         public CalculatedMatches(string results)
         {
             _results = results ?? throw new ArgumentNullException(results);
             _matches = results.Split(",");
+            RegisterTeams();
+            CalculateScore();
+        }
+
+        public CalculatedMatches(ILoadData data,string path)
+        {
+            _data = data;
+            _results = _data.FromTextFile(path) ?? throw new FileNotFoundException(path);
+            _matches = _results.Split(",");
             RegisterTeams();
             CalculateScore();
         }
