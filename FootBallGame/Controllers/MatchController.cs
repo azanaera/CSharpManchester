@@ -4,13 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using CsharpManchester;
+using FootBallGame.Data;
+using FootBallGame.Util;
 
 namespace FootBallGame.Controllers
 {
     public class MatchController : Controller
     {
-        private Team _team;
+        private readonly FootBallMvcContext _context;
+
+        public MatchController(FootBallMvcContext context)
+        {
+            _context = context;
+        }
         // GET: Match
         public ActionResult Index()
         {
@@ -32,19 +38,17 @@ namespace FootBallGame.Controllers
         // POST: Match/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(string result)
         {
-            try
+            // TODO: Add insert logic here
+            var calculatedMatches = new CalculatedMatches(result);
+            var team = calculatedMatches.GetResults("Manchester United");
+            foreach (var item in calculatedMatches._teams)
             {
-                // TODO: Add insert logic here
-                var calculatedMatches = new CalculatedMatches(collection["result"]);
-                ViewBag.Team = calculatedMatches.GetResults("Manchester United");
-                return RedirectToAction(nameof(Index));
+                _context.Add(item);
             }
-            catch
-            {
-                return View();
-            }
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index),"Teams");
         }
 
         // GET: Match/Edit/5

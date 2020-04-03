@@ -11,10 +11,10 @@ namespace CsharpManchester
     {
         static void Main(string[] args)
         {
-            var path = GetStringResultFromFile(args[1]);
+            var path = GetStringResultFromFile(args[0]);
 
             var calculateMatch = new CalculatedMatches(path);
-            Team selectedTeam = calculateMatch.GetResults("Arsenal");
+            Team selectedTeam = calculateMatch.GetResults("Manchester United");
             Console.WriteLine(selectedTeam);
         }
 

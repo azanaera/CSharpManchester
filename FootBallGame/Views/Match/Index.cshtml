@@ -1,33 +1,14 @@
-﻿
-@{
-    ViewData["Title"] = "Match Index";
-    var team = ViewBag.Team as Team;
-}
+﻿@{string result = ""; }
+<h1>Match Index</h1>
 
-
-@if (team != null)
-{
-<div class="card" style="width: 18rem;">
-    <div class="card-body">
-        <h5 class="card-title">@team.Name</h5>
+<form method="post" asp-action="Create">
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Example textarea</label>
+                <textarea asp-for="@result" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Calculate</button>
+            </div>
+        </div>
     </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-
-            <label for="exampleDropdownFormEmail1">Email address</label>
-            Cras justo odio
-        </li>
-        <li class="list-group-item">Dapibus ac facilisis in</li>
-        <li class="list-group-item">Vestibulum at eros</li>
-    </ul>
-    <div class="card-body">
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
-    </div>
-</div>
-}
-else
-{
-    <p>Team is Empty. Plase try again.</p>
-}
-<a asp-action="Create" type="button" class="btn btn-primary btn-lg">Large button</a>
+</form>

@@ -15,6 +15,5 @@ namespace FootBallGame.Models
         public int GamesPlayed { get; set; }
         public int GoalsScored { get; set; }
         public int GoalsConceded { get; set; }
-        public int GetPoints() { return (Wins * 3) + Draws; }
     }
 }
