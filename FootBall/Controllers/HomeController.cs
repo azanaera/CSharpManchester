@@ -11,7 +11,6 @@ namespace FootBall.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private static List<Team> _teams;
         public IActionResult Details(int? id)
         {
@@ -36,10 +35,6 @@ namespace FootBall.Controllers
             _teams = calculatedMatches._teams;
             return View(nameof(Index), _teams);
         }
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
 
         public IActionResult CalculateMatch()
         {
@@ -47,6 +42,10 @@ namespace FootBall.Controllers
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+        public IActionResult Index()
         {
             return View();
         }
