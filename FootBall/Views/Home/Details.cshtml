@@ -1,0 +1,20 @@
+﻿@model Team  
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">@Html.DisplayFor(model => model.Name) </h5>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">@Html.DisplayNameFor(model => model.Wins) : @Html.DisplayFor(model => model.Wins)</li>
+        <li class="list-group-item">@Html.DisplayNameFor(model => model.Draws) : @Html.DisplayFor(model => model.Draws)</li>
+        <li class="list-group-item">@Html.DisplayNameFor(model => model.Losses) : @Html.DisplayFor(model => model.Losses)</li>
+        <li class="list-group-item">@Html.DisplayNameFor(model => model.GoalsScored) : @Html.DisplayFor(model => model.GoalsScored)</li>
+        <li class="list-group-item">@Html.DisplayNameFor(model => model.GoalsConceded) : @Html.DisplayFor(model => model.GoalsConceded)</li>
+        <li class="list-group-item">Points : @Html.DisplayFor(model => model.TotalPoints)</li>
+    </ul>
+</div>

@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "Calculatematch";
+    string result = "";
+}
+
+<h1>Create</h1>
+
+
+<form method="post" asp-action="CalculateMatch">
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <div class="input-group">
+                    <textarea asp-for="@result" class="form-control" aria-label="With textarea"></textarea>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">Calculate</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
