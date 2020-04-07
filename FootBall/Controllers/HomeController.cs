@@ -12,6 +12,7 @@ namespace FootBall.Controllers
     public class HomeController : Controller
     {
         private static List<Team> _teams;
+        private static CalculatedMatches _calculatedMatches;
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -31,9 +32,15 @@ namespace FootBall.Controllers
         [HttpPost]
         public IActionResult CalculateMatch(string result)
         {
-            var calculatedMatches = new CalculatedMatches(result);
-            _teams = calculatedMatches._teams;
-            return View(nameof(Index), _teams);
+            _calculatedMatches = new CalculatedMatches(result);
+            _teams = _calculatedMatches._teams;
+            return View(_teams);
+        }
+
+        public IActionResult ViewTeam(string teamName)
+        {
+            var team = _calculatedMatches.GetResults(teamName);
+            return PartialView("_TeamDetail", team);
         }
 
         public IActionResult CalculateMatch()
