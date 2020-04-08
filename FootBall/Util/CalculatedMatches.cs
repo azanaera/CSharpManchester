@@ -10,16 +10,19 @@ namespace FootBall
     public class CalculatedMatches
     {
         private readonly string[] _matches;
-        public readonly List<Team> _teams = new List<Team>();
+        private List<Team> _teams;
         private readonly string _results;
 
         public CalculatedMatches(string results)
         {
             _results = results ?? throw new ArgumentNullException(results);
             _matches = results.Split(",");
+            _teams = new List<Team>();
             RegisterTeams();
             CalculateScore();
         }
+
+        public List<Team> Teams { get => _teams; private set { _teams = value; } }
         //002 Calculate Score of each Team
         private void CalculateScore()
         {

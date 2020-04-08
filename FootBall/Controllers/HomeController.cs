@@ -11,16 +11,15 @@ namespace FootBall.Controllers
 {
     public class HomeController : Controller
     {
-        private static List<Team> _teams;
-        private static CalculatedMatches _calculatedMatches;
         public IActionResult Details(int? id)
         {
+            var calculatedMatches = new CalculatedMatches(HttpContext.Request.Cookies["result"]);
             if (id == null)
             {
                 return NotFound();
             }
 
-            var team = _teams
+            var team = calculatedMatches.Teams
                 .FirstOrDefault(m => m.Id == id);
             if (team == null)
             {
@@ -32,14 +31,16 @@ namespace FootBall.Controllers
         [HttpPost]
         public IActionResult CalculateMatch(string result)
         {
-            _calculatedMatches = new CalculatedMatches(result);
-            _teams = _calculatedMatches._teams;
+            HttpContext.Response.Cookies.Append("result",result);
+            var _calculatedMatches = new CalculatedMatches(result);
+            var _teams = _calculatedMatches.Teams;
             return View(_teams);
         }
 
         public IActionResult ViewTeam(string teamName)
         {
-            var team = _calculatedMatches.GetResults(teamName);
+            var _calculatedMatches = new CalculatedMatches(HttpContext.Request.Cookies["result"]);
+            var team = _calculatedMatches.GetResults(teamName); // Team object
             return PartialView("_TeamDetail", team);
         }
 
