@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using CsharpManchester;
 using FootBall.Models;
 
 namespace FootBall.Controllers
@@ -16,7 +17,7 @@ namespace FootBall.Controllers
             var calculatedMatches = new CalculatedMatches(HttpContext.Request.Cookies["result"]);
             if (id == null)
             {
-                return NotFound();
+                return NotFound("ID cannot be null. Please provide a valid input.");
             }
 
             var team = calculatedMatches.Teams
@@ -31,7 +32,7 @@ namespace FootBall.Controllers
         [HttpPost]
         public IActionResult CalculateMatch(string result)
         {
-            HttpContext.Response.Cookies.Append("result",result);
+            HttpContext.Response.Cookies.Append(nameof(result),result);
             var _calculatedMatches = new CalculatedMatches(result);
             var _teams = _calculatedMatches.Teams;
             return View(_teams);

@@ -70,7 +70,7 @@ namespace CsharpManchester.Tests
         {
             var calculateMatches = CreateDefaultCalculateMatches(results);
             Team selectedTeam = calculateMatches.GetResults("Manchester United");
-            Assert.Equal(expected, selectedTeam.GetPoints());
+            Assert.Equal(expected, selectedTeam.GetPoints);
         }
     }
 }
