@@ -1,19 +1,25 @@
+using CsharpManchester;
 using FootBall.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Moq;
 using Xunit;
+using Moq;
+using System.Collections.Generic;
 
 namespace FootBall.Tests
 {
     public class HomeControllerShould
     {
-        private readonly HomeController _sut;
+        Mock<IHttpContextAccessor> mockHttp;
+        DefaultHttpContext context;
+        private HomeController _sut;
         const string matches = "Manchester United 1 Chelsea 0,Arsenal 1 Manchester United 1,Manchester United 3 Fulham 1,Liverpool 2 Manchester United 1,Swansea 2 Manchester United 4";
-
         public HomeControllerShould()
         {
-            _sut = new HomeController();
+            // Arrange
+            mockHttp =  new Mock<IHttpContextAccessor>();
+            context  =  new DefaultHttpContext();
+
         }
         [Fact]
         public void ReturnViewForIndex()
@@ -23,19 +29,19 @@ namespace FootBall.Tests
         }
         [Theory]
         [InlineData(matches)]
-        public void BeTheSameViewAfterCalculateMatch(string matchess)
+        public void BeTheSameViewAfterCalculateMatch(string matches)
         {
+            context.Response.Cookies.Append(nameof(matches), matches);
+            mockHttp.Setup(_ => _.HttpContext).Returns(context);
 
-            var cookieCollection = new RequestCookieCollection { };
-            var response = new Mock<Microsoft.AspNetCore.Http.HttpResponse>();
-            response.SetupGet(r => r.Cookies).Returns(cookieCollection);
+            // Act
+            _sut = new HomeController(mockHttp.Object);
+            var result = _sut.CalculateMatch(matches);
 
-            //var context = new Mock<HttpContextBase>();
-            //context.SetupGet(x => x.Response).Returns(response.Object);
-
-            var result = _sut.CalculateMatch(matchess);
+            // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
-            Assert.Equal("CalculateMatch", viewResult.ViewName);
+            Assert.IsType<List<Team>>(viewResult.Model);
+            //Assert.Equal("CalculateMatch", viewResult.ViewName);
 
         }
     }

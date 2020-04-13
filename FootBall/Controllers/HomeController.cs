@@ -7,14 +7,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CsharpManchester;
 using FootBall.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace FootBall.Controllers
 {
     public class HomeController : Controller
     {
+        private IHttpContextAccessor _httpContextAccessor;
+        public HomeController(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
         public IActionResult Details(int? id)
         {
-            var calculatedMatches = new CalculatedMatches(HttpContext.Request.Cookies["result"]);
+            var calculatedMatches = new CalculatedMatches(_httpContextAccessor.HttpContext.Request.Cookies["result"]);
             if (id == null)
             {
                 return NotFound("ID cannot be null. Please provide a valid input.");
@@ -32,7 +38,7 @@ namespace FootBall.Controllers
         [HttpPost]
         public IActionResult CalculateMatch(string result)
         {
-            HttpContext.Response.Cookies.Append(nameof(result),result);
+            _httpContextAccessor.HttpContext.Response.Cookies.Append(nameof(result),result);
             var _calculatedMatches = new CalculatedMatches(result);
             var _teams = _calculatedMatches.Teams;
             return View(_teams);
@@ -40,7 +46,7 @@ namespace FootBall.Controllers
 
         public IActionResult ViewTeam(string teamName)
         {
-            var _calculatedMatches = new CalculatedMatches(HttpContext.Request.Cookies["result"]);
+            var _calculatedMatches = new CalculatedMatches(_httpContextAccessor.HttpContext.Request.Cookies["result"]);
             var team = _calculatedMatches.GetResults(teamName); // Team object
             return PartialView("_TeamDetail", team);
         }
