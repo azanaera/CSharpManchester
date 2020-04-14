@@ -13,6 +13,8 @@ namespace CsharpManchester
         private readonly string _results;
         private ILoadData _data;
 
+        public List<Team> Teams => _teams;
+
         public CalculatedMatches(string results)
         {
             _results = results ?? throw new ArgumentNullException(results);
@@ -37,17 +39,17 @@ namespace CsharpManchester
                 Team homeTeam = null, awayTeam = null;
                 int homeScore = 0, awayScore = 0;
 
-                for (int j = 0; j < _teams.Count; j++)
+                for (int j = 0; j < Teams.Count; j++)
                 {
-                    if (_matches[i].TrimStart().Contains(_teams[j].Name,StringComparison.InvariantCulture))
+                    if (_matches[i].TrimStart().Contains(Teams[j].Name,StringComparison.InvariantCulture))
                     {
-                        int nameIndex = _matches[i].TrimStart().IndexOf(_teams[j].Name,StringComparison.InvariantCulture);
-                        int scoreIndex = nameIndex + _teams[j].Name.Length;
+                        int nameIndex = _matches[i].TrimStart().IndexOf(Teams[j].Name,StringComparison.InvariantCulture);
+                        int scoreIndex = nameIndex + Teams[j].Name.Length;
                         int score = 0;
 
                         if (nameIndex > 0)
                         {
-                            awayTeam = _teams[j];
+                            awayTeam = Teams[j];
                             bool team1HasScore = int.TryParse(_matches[i].TrimStart().Substring(scoreIndex), out score)
                                                 ? true : throw new ArgumentException("A team's score cannot be null.");
 
@@ -55,7 +57,7 @@ namespace CsharpManchester
                         }
                         else
                         {
-                            homeTeam = _teams[j];
+                            homeTeam = Teams[j];
                             String partString = _matches[i].TrimStart().Substring(scoreIndex).Trim();
                             bool team2Hasscore = int.TryParse(partString.Substring(0, partString.IndexOf(' ',StringComparison.InvariantCulture)), out score) 
                                                 ? true : throw new ArgumentException("A team's score cannot be null.");
@@ -105,26 +107,26 @@ namespace CsharpManchester
                 //team name
                 var team1 = matches[i].Substring(0, teamOneIndexEnd).Trim();
                 var team2 = matches[i].Substring(teamOneIndexEnd + 1, teamTwoIndexEnd).Trim();
-                if (!_teams.Where(t => t.Name == team1).Any())
+                if (!Teams.Where(t => t.Name == team1).Any())
                 {
-                    _teams.Add(new Team { Name = team1 });
+                    Teams.Add(new Team { Name = team1 });
                 }
-                if(!_teams.Where(t => t.Name == team2).Any())
+                if(!Teams.Where(t => t.Name == team2).Any())
                 {
-                    _teams.Add(new Team { Name = team2 });
+                    Teams.Add(new Team { Name = team2 });
                 }
             }
-            return _teams;
+            return Teams;
         }
 
         public Team GetResults(string selectedName)
         {
-            return _teams.Where(t => t.Name == selectedName).FirstOrDefault();
+            return Teams.Where(t => t.Name == selectedName).FirstOrDefault();
         }
 
         public bool HasTeamsRegistered()
         {
-            return _teams.Count >= 1;
+            return Teams.Count >= 1;
         }
     } // end class
 }

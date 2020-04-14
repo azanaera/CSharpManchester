@@ -1,0 +1,58 @@
+﻿@model List<Team>
+@{
+    ViewData["Title"] = "Calculate Match";
+    string result = "";
+}
+
+<h1>Create</h1>
+
+
+<form method="post" asp-action="CalculateMatch" id="createMatch">
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <div class="input-group">
+                    <textarea asp-for="@result" class="form-control" aria-label="With textarea"></textarea>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <button type="submit" id="btnSubmit" class="btn btn-primary btn-lg btn-block">Calculate</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@if (Model != null)
+{
+
+    <div class="row">
+        <div class="col-4">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01" onchange="loadTeamDetail()">
+                    <option selected>Choose...</option>
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.Name">@item.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+}
+
+<div id="partialPlaceHolder"></div>
+
+@section scripts {
+    <script>
+        function loadTeamDetail() {
+            var x = $("#inputGroupSelect01 option:selected").text();
+            var url = encodeURI("@Url.Action("ViewTeam", "Home")" + "?teamName=" + x);
+            $("#partialPlaceHolder").load(url);
+        }
+    </script>
+}
