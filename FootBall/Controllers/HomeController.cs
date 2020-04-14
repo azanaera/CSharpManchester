@@ -38,15 +38,15 @@ namespace FootBall.Controllers
         [HttpPost]
         public IActionResult CalculateMatch(string result)
         {
-            _httpContextAccessor.HttpContext.Response.Cookies.Append(nameof(result),result);
+            _httpContextAccessor.HttpContext.Session.SetString(nameof(result),result);
             var _calculatedMatches = new CalculatedMatches(result);
             var _teams = _calculatedMatches.Teams;
-            return View(_teams);
+            return View("CalculateMatch",_teams);
         }
 
         public IActionResult ViewTeam(string teamName)
         {
-            var _calculatedMatches = new CalculatedMatches(_httpContextAccessor.HttpContext.Request.Cookies["result"]);
+            var _calculatedMatches = new CalculatedMatches(_httpContextAccessor.HttpContext.Session.GetString("result"));
             var team = _calculatedMatches.GetResults(teamName); // Team object
             return PartialView("_TeamDetail", team);
         }

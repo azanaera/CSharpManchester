@@ -31,17 +31,19 @@ namespace FootBall.Tests
         [InlineData(matches)]
         public void BeTheSameViewAfterCalculateMatch(string matches)
         {
-            context.Response.Cookies.Append(nameof(matches), matches);
-            mockHttp.Setup(_ => _.HttpContext).Returns(context);
-
+            var contextMock = new Mock<HttpContext>();
+            var sessionMock = Mock.Of<ISession>();
+            sessionMock.SetString(nameof(matches), matches);
+            contextMock
+                .SetupGet(c => c.Session).Returns(sessionMock);
+            _sut = new HomeController(new HttpContextAccessor { HttpContext = contextMock.Object });
             // Act
-            _sut = new HomeController(mockHttp.Object);
             var result = _sut.CalculateMatch(matches);
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
             Assert.IsType<List<Team>>(viewResult.Model);
-            //Assert.Equal("CalculateMatch", viewResult.ViewName);
+            Assert.Equal("CalculateMatch", viewResult.ViewName);
 
         }
     }
